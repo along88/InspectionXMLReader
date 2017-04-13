@@ -10,11 +10,11 @@ using System.Xml;
 
 public class XmlBuilder
 {
-    private static XmlBuilder instance;
-    private static XmlNodeList xmlNodes;
+    #region Archived
     private static List<string> key;
     private static List<string> value;
-
+    #endregion
+    private static XmlBuilder instance; 
     public static XmlBuilder Instance
     {
         get
@@ -25,32 +25,46 @@ public class XmlBuilder
             }
             return instance;
         }
-    }
-    static public Dictionary<string, string> InspectionData { get; private set; }
-    static public Dictionary<string, string> Survey { get; private set; }
-    static public Dictionary<string, string> AddnandCATPerils { get; private set; }
-    static public Dictionary<string, string> Misc { get; private set; }
-    static public Dictionary<string, string> BldgInfo { get; private set; }
-    static public Dictionary<string, string> CommonHaz { get; private set; }
-    static public Dictionary<string, string> GeneralLiability { get; private set; }
-    static public Dictionary<string, string> NeighboringExposures { get; private set; }
-    static public Dictionary<string, string> OperationsOccupancy { get; private set; }
-    static public Dictionary<string, string> ProtectionSecurity { get; private set; }
-    static public Dictionary<string, string> RecsOpinionLosses { get; private set; }
-    static public Dictionary<string, string> SpecialHazards { get; private set; }
-    static public List<Dictionary<string, string>> Cooking { get; private set; }
-    static public Dictionary<string, string> Sprinkler { get; private set; }
-    static public List<Dictionary<string, string>> PropertyRecommendations { get; private set; }
-    static public List<Dictionary<string, string>> GLRecommendations { get; private set; }
-    static public Dictionary<string, string> Wind { get; private set; }
-    static public Dictionary<string, string> BI { get; private set; }
-    static public Dictionary<string, string> Operations { get; private set; }
+    } //Singleton Pattern
+
+    private static XmlNodeList xmlNodes; //a reference to a given XML node
+    
+    #region XML Elements
+    /// <summary>
+    /// We only want to grab a reference to the XML Elements pertaining to the inspection form
+    /// we hold a dictionary reference to each parent elements child nodes
+    /// </summary>
+    public static Dictionary<string, string> InspectionData { get; private set; }
+    public static Dictionary<string, string> Survey { get; private set; }
+    public static Dictionary<string, string> AddnandCATPerils { get; private set; }
+    public static Dictionary<string, string> Misc { get; private set; }
+    public static Dictionary<string, string> BldgInfo { get; private set; }
+    public static Dictionary<string, string> CommonHaz { get; private set; }
+    public static Dictionary<string, string> GeneralLiability { get; private set; }
+    public static Dictionary<string, string> NeighboringExposures { get; private set; }
+    public static Dictionary<string, string> OperationsOccupancy { get; private set; }
+    public static Dictionary<string, string> ProtectionSecurity { get; private set; }
+    public static Dictionary<string, string> RecsOpinionLosses { get; private set; }
+    public static Dictionary<string, string> SpecialHazards { get; private set; }
+    public static List<Dictionary<string, string>> Cooking { get; private set; }
+    public static Dictionary<string, string> Sprinkler { get; private set; }
+    public static List<Dictionary<string, string>> PropertyRecommendations { get; private set; }
+    public static List<Dictionary<string, string>> GLRecommendations { get; private set; }
+    public static Dictionary<string, string> Wind { get; private set; }
+    public static Dictionary<string, string> BI { get; private set; }
+    public static Dictionary<string, string> Operations { get; private set; }
+    #endregion
+    
+    /// <summary>
+    /// Returns a dictionary composed of a xml node's child elements and it's value 
+    /// </summary>
+    /// <param name="xmlNodes"></param>
+    /// <returns></returns>
     private Dictionary<string, string> GetElements(XmlNode xmlNodes)
     {
         Dictionary<string, string> dictionary = new Dictionary<string, string>();
         foreach (XmlNode xmlNode in xmlNodes)
         {
-
             if (string.IsNullOrEmpty(xmlNode.InnerText) || string.IsNullOrWhiteSpace(xmlNode.InnerText))
                 dictionary.Add(xmlNode.Name, "");
             else
@@ -58,6 +72,7 @@ public class XmlBuilder
         }
         return dictionary;
     }
+    
     /// <summary>
     /// Populates ElementNodes with the selected XML's content where the element name matches a
     /// desired case value
@@ -65,7 +80,6 @@ public class XmlBuilder
     private void populate(XmlDocument xmlDoc)
     {
         xmlNodes = xmlDoc.ChildNodes[0].ChildNodes;
-
         foreach (XmlNode item in xmlNodes)
         {
             switch (item.Name.ToLower())
@@ -108,9 +122,7 @@ public class XmlBuilder
                     break;
                 case "wkfc_inspectiondata_cooking":
                     if (Cooking == null)
-                    {
                         Cooking = new List<Dictionary<string, string>>();
-                    }
                     Cooking.Add(GetElements(item));
                     break;
                 case "wkfc_inspectiondata_sprinkler":
@@ -118,16 +130,12 @@ public class XmlBuilder
                     break;
                 case "wkfc_inspectiondata_propertyrecommendations":
                     if (PropertyRecommendations == null)
-                    {
                         PropertyRecommendations = new List<Dictionary<string, string>>();
-                    }
                     PropertyRecommendations.Add(GetElements(item));
                     break;
                 case "wkfc_inspectiondata_glrecommendations":
                     if (GLRecommendations == null)
-                    {
                         GLRecommendations = new List<Dictionary<string, string>>();
-                    }
                     GLRecommendations.Add(GetElements(item));
                     break;
                 case "wkfc_inspectiondata_wind":
@@ -224,10 +232,9 @@ public class XmlBuilder
         //for (int i = 0; i < value.Count; i++)
         //    ElementNodes.Add(key[i], value[i]);
         #endregion
-
         string line = "";
         string fullLine = null;
-        //Xml Scrubber
+        //Cleans the XML file of any invalid characters by changing them into their corresponding syntax
         using (StreamReader sr = new StreamReader(xmlfile))
         {
             while (true)
@@ -242,13 +249,12 @@ public class XmlBuilder
                 }
                 else
                     fullLine += "\n" + line;
-
             }
         }
+        //Uncomment the below line to view  the entire cleaned xml file's content in the console window
         //Console.WriteLine(fullLine);
         XmlDocument xmlDocument = new XmlDocument();
         xmlDocument.LoadXml(fullLine);
         populate(xmlDocument);
-
     }
 }

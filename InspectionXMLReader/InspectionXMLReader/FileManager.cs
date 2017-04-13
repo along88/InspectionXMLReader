@@ -12,7 +12,7 @@ public class FileManager
     /// <summary>
     /// Read-Only string reference to the OpenFileDialog file name
     /// </summary>
-    private static string FileName
+    private static string fileName
     {
         get { return file.FileName; }
 
@@ -44,7 +44,7 @@ public class FileManager
     {
         try
         {
-            XmlBuilder.Instance.GetInspectionData(FileName); //Starts Process for parsing xml file into a string dictionary
+            XmlBuilder.Instance.GetInspectionData(fileName); //Starts Process for parsing xml file into a string dictionary
         }
         catch (Exception ex)
         {

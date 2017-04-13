@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
     static class ErrorExceptions
     {
-        public static string LastMessage { get; set; }
-
+        private static string LastMessage;
         public static void OnException(string exceptionMessage)
         {
             LastMessage = exceptionMessage;
             System.Windows.Forms.MessageBox.Show(LastMessage);
         }
-       
     }
 
