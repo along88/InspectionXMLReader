@@ -6,16 +6,33 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.ComponentModel;
 using System.Windows.Forms;
-
+using InspectionXMLReader;
 
 class Program
 {
     [STAThread]
     static void Main(string[] args)
     {
+        Console.WriteLine("1.Control Number");
+        Console.WriteLine("2.Upload XML");
+        string response = Console.ReadLine();
         try
         {
-            FileManager.Instance.NewFile();
+            switch (response)
+            {
+                case "1":
+                    ControlNo controlNumber = new ControlNo();
+                    Console.WriteLine("Enter Control Number");
+                    controlNumber.ControlNumber = Console.ReadLine();
+                    FileManager.Instance.acceptfile(controlNumber);
+                    break;
+                case "2":
+                    LocalFile LocalFile = new LocalFile();
+                    FileManager.Instance.acceptfile(LocalFile);
+                    break;
+                default:
+                    break;
+            }
             InspectionForm inspectionForm = new InspectionForm(RequestForm());
         }
         catch (Exception ex)

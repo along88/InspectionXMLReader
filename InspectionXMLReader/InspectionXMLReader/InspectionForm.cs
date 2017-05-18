@@ -72,9 +72,8 @@ public class InspectionForm
                         }
                     }
                 }
-                Console.SetCursorPosition(0, 2);
-                percentage = (i * 100 / inspectionDoc.Tables.Count);
-                Console.Write(percentage.ToString() + "%");
+                
+                percentage = ProgressCounter(i, inspectionDoc.Tables.Count);
             }
             Console.SetCursorPosition(0, 2);
             Console.Write("100%");
@@ -88,7 +87,7 @@ public class InspectionForm
             inspectionDoc.Application.Quit(ref missing, ref missing, ref missing);
         }
     }
-
+    
     /// <summary>
     /// Loads the specified Inspection Form Template
     /// </summary>
@@ -173,6 +172,14 @@ public class InspectionForm
             default:
                 break;
         }
+    }
+    private int ProgressCounter(int currentProgress, int TableCount)
+    {
+        
+        Console.SetCursorPosition(0,2);
+        currentProgress = (currentProgress * 100 / TableCount);
+        Console.Write(currentProgress.ToString() + "%");
+        return currentProgress;
     }
 }
 

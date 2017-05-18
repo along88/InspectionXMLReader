@@ -11,8 +11,8 @@ using System.Xml;
 public class XmlBuilder
 {
     #region Archived
-    private static List<string> key;
-    private static List<string> value;
+    //private static List<string> key;
+    //private static List<string> value;
     #endregion
     private static XmlBuilder instance; 
     public static XmlBuilder Instance
@@ -236,6 +236,33 @@ public class XmlBuilder
         string fullLine = null;
         //Cleans the XML file of any invalid characters by changing them into their corresponding syntax
         using (StreamReader sr = new StreamReader(xmlfile))
+        {
+            while (true)
+            {
+                line = sr.ReadLine();
+                if (string.IsNullOrWhiteSpace(line))
+                    break;
+                else if (line.Contains("&"))
+                {
+                    line = line.Replace("&", "&amp;");
+                    fullLine += "\n" + line;
+                }
+                else
+                    fullLine += "\n" + line;
+            }
+        }
+        //Uncomment the below line to view  the entire cleaned xml file's content in the console window
+        //Console.WriteLine(fullLine);
+        XmlDocument xmlDocument = new XmlDocument();
+        xmlDocument.LoadXml(fullLine);
+        populate(xmlDocument);
+    }
+    public void GetInspectionData(Stream xmlFile)
+    {
+        string line = "";
+        string fullLine = null;
+        //Cleans the XML file of any invalid characters by changing them into their corresponding syntax
+        using (StreamReader sr = new StreamReader(xmlFile))
         {
             while (true)
             {
