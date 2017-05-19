@@ -154,10 +154,10 @@ public class XmlBuilder
     }
 
     /// <summary>
-    /// Iterates through a given IMS inspection XML file
+    /// Iterates through a given IMS inspection file
     /// </summary>
     /// <param name="xmlfile"></param>
-    public void GetInspectionData(string xmlfile)
+    public void GetInspectionData(string filePath)
     {
         #region Archive
         //XmlDocument xmlDoc = new XmlDocument();
@@ -235,7 +235,7 @@ public class XmlBuilder
         string line = "";
         string fullLine = null;
         //Cleans the XML file of any invalid characters by changing them into their corresponding syntax
-        using (StreamReader sr = new StreamReader(xmlfile))
+        using (StreamReader sr = new StreamReader(filePath))
         {
             while (true)
             {
@@ -257,31 +257,5 @@ public class XmlBuilder
         xmlDocument.LoadXml(fullLine);
         populate(xmlDocument);
     }
-    public void GetInspectionData(Stream xmlFile)
-    {
-        string line = "";
-        string fullLine = null;
-        //Cleans the XML file of any invalid characters by changing them into their corresponding syntax
-        using (StreamReader sr = new StreamReader(xmlFile))
-        {
-            while (true)
-            {
-                line = sr.ReadLine();
-                if (string.IsNullOrWhiteSpace(line))
-                    break;
-                else if (line.Contains("&"))
-                {
-                    line = line.Replace("&", "&amp;");
-                    fullLine += "\n" + line;
-                }
-                else
-                    fullLine += "\n" + line;
-            }
-        }
-        //Uncomment the below line to view  the entire cleaned xml file's content in the console window
-        //Console.WriteLine(fullLine);
-        XmlDocument xmlDocument = new XmlDocument();
-        xmlDocument.LoadXml(fullLine);
-        populate(xmlDocument);
-    }
+    
 }

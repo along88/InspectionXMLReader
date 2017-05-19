@@ -18,9 +18,9 @@ public class InspectionForm
     private Application wordApp; //A instance of a word Application
     private Document inspectionDoc;// A instance of a document inside a word Application
     private List<Dictionary<string, string>> foundElements; //used to hold a list of XmlBuilder's element dictionaries
-    public InspectionForm(string form)
+    public InspectionForm(string formType)
     {
-        GetFileName(form);
+        GetFileName(formType);
         InitializeInspectionForm();
         Console.Write("Building Document" + Environment.NewLine + "Please Wait.");
         FillInspectionForm();

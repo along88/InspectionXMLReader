@@ -10,44 +10,51 @@ using InspectionXMLReader;
 
 class Program
 {
+    private static string[] fileTypes =  new string[2];
     [STAThread]
     static void Main(string[] args)
     {
-        Console.WriteLine("1.Control Number");
-        Console.WriteLine("2.Upload XML");
+        bool active = true;
+        while (active)
+        {
+            RequestForm();
+            active = Continue();
+        }
+    }
+
+    private static void RequestForm()
+    {
+        
+        Console.WriteLine("1.Load from IMS");
+        Console.WriteLine("2.Load Local File");
         string response = Console.ReadLine();
-        try
+        switch (response)
         {
-            switch (response)
-            {
-                case "1":
-                    ControlNo controlNumber = new ControlNo();
-                    Console.WriteLine("Enter Control Number");
-                    controlNumber.ControlNumber = Console.ReadLine();
-                    FileManager.Instance.acceptfile(controlNumber);
-                    break;
-                case "2":
-                    LocalFile LocalFile = new LocalFile();
-                    FileManager.Instance.acceptfile(LocalFile);
-                    break;
-                default:
-                    break;
-            }
-            InspectionForm inspectionForm = new InspectionForm(RequestForm());
+            case "1":
+                Console.WriteLine("Enter Control Number");
+                string ctrlNo = Console.ReadLine();
+                HostedFile hostedFile = new HostedFile(ctrlNo);
+                Load(hostedFile.Path);
+                System.IO.File.Delete(hostedFile.Path);
+                InspectionForm imsForm = new InspectionForm(SelectFormType());
+                break;
+            case "2":
+                LocalFile localFile = new LocalFile();
+                Load(localFile.Path);
+                InspectionForm localForm = new InspectionForm(SelectFormType());
+                break;
+            default:
+                RequestForm();
+                break;
         }
-        catch (Exception ex)
-        {
-            ErrorExceptions.OnException(ex.Message);
-            Console.WriteLine(ex.Message);
-        }
-        Console.ReadKey();
+        
     }
 
     /// <summary>
     /// Prompts user for a form to load and returns the form selection as a string
     /// </summary>
     /// <returns></returns>
-    static string RequestForm()
+    static string SelectFormType()
     {
         bool selecting = true;
         string formType = "";
@@ -106,6 +113,45 @@ class Program
             }
         }
         return formType;
+    }
+
+    static void Load(string path)
+    {
+        try
+
+        {
+            XmlBuilder.Instance.GetInspectionData(path);
+            
+        }
+        catch (Exception ex)
+        {
+            if(string.IsNullOrEmpty(path))
+            {
+                RequestForm();
+            }
+            else if (!path.ToString().Substring(path.ToString().Length - 3, 3).Equals("xml") ||
+                            !path.ToString().Substring(path.ToString().Length - 3, 3).Equals("txt"))
+                ErrorExceptions.OnException("please select a file with xml or txt extension");
+            else
+                ErrorExceptions.OnException(ex.StackTrace);
+        }
+    }
+
+    static bool Continue()
+    {
+        Console.WriteLine("Would you like to load a new Inspection Form? Y/N");
+        string newForm = Console.ReadLine();
+        switch (newForm.ToLower())
+        {
+            case "y":
+                return true;
+            case "n":
+                return false;
+            default:
+                Continue();
+                return true; 
+                
+        }
     }
 }
 
