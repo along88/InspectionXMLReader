@@ -13,13 +13,17 @@ using System.Reflection;
 
 public class InspectionForm
 {
+    
     private object missing = System.Reflection.Missing.Value;
-    private object fileName = ""; //filename of the given word document
+    private object fileName = System.IO.Directory.GetCurrentDirectory() + @"\Temp\form"; //filename of the given word document
+    private string prefix = ".doc";
+    
     private Application wordApp; //A instance of a word Application
     private Document inspectionDoc;// A instance of a document inside a word Application
     private List<Dictionary<string, string>> foundElements; //used to hold a list of XmlBuilder's element dictionaries
     public InspectionForm(string formType)
     {
+       
         GetFileName(formType);
         InitializeInspectionForm();
         Console.Write("Building Document" + Environment.NewLine + "Please Wait.");
@@ -36,7 +40,8 @@ public class InspectionForm
         wordApp = new Application();
         wordApp.Visible = false;
         inspectionDoc = new Document();
-        inspectionDoc = wordApp.Documents.Open(ref fileName, ReadOnly: false);
+        object appended = fileName+ prefix;
+        inspectionDoc = wordApp.Documents.Open(ref appended, ReadOnly: false);
     }
 
     /// <summary>
@@ -73,7 +78,7 @@ public class InspectionForm
                     }
                 }
                 
-                percentage = ProgressCounter(i, inspectionDoc.Tables.Count);
+                percentage = ProgressCounter(i, inspectionDoc.Tables.Count + foundElements.Count);
             }
             Console.SetCursorPosition(0, 2);
             Console.Write("100%");
@@ -96,10 +101,11 @@ public class InspectionForm
     {
         foundElements = new List<Dictionary<string, string>>();
         string root = System.IO.Directory.GetCurrentDirectory();
+        object _fileName = "";
         switch (form)
         {
             case "inspection format":
-                fileName = root + @"\Template\WKFCInspectionformat.doc";
+                _fileName = root + @"\Template\WKFCInspectionformat";
                 if (XmlBuilder.InspectionData != null)
                     foundElements.Add(XmlBuilder.InspectionData);
                 if (XmlBuilder.Survey != null)
@@ -131,32 +137,32 @@ public class InspectionForm
                     foundElements.Add(XmlBuilder.GeneralLiability);
                 break;
             case "im builders risk":
-                fileName = root + @"\Template\imbuildersriskdataelements.doc";
+                _fileName = root + @"\Template\imbuildersriskdataelements";
                 break;
             case "GL Rec Letter":
-                fileName = root + @"\Template\GLRecLetter.doc";
+                _fileName = root + @"\Template\GLRecLetter";
                 if (XmlBuilder.GLRecommendations != null)
                     for (int i = 0; i < XmlBuilder.GLRecommendations.Count; i++)
                         foundElements.Add(XmlBuilder.GLRecommendations[i]);
                break;
             case "BI Addendum":
-                fileName = root + @"\Template\BIADDENDUM.doc";
+                _fileName = root + @"\Template\BIADDENDUM";
                 if (XmlBuilder.BI != null)
                     foundElements.Add(XmlBuilder.BI);
                 break;
             case "Operations Addendum":
-                fileName = root + @"\Template\OPERATIONSADDENDUM.doc";
+                _fileName = root + @"\Template\OPERATIONSADDENDUM";
                 if (XmlBuilder.Operations != null)
                     foundElements.Add(XmlBuilder.Operations);
                 break;
             case "Property Rec Letter":
-                fileName = root + @"\Template\PropertyRecLetter.doc";
+                _fileName = root + @"\Template\PropertyRecLetter";
                 if (XmlBuilder.PropertyRecommendations != null)
                     for (int i = 0; i < XmlBuilder.PropertyRecommendations.Count; i++)
                         foundElements.Add(XmlBuilder.PropertyRecommendations[i]);
                 break;
             case "Rec Check Inspection Form":
-                fileName = root + @"\Template\RECCHECKINSPECTIONFORM.docx";
+                _fileName = root + @"\Template\RECCHECKINSPECTIONFORM";
                 if (XmlBuilder.PropertyRecommendations != null)
                     for (int i = 0; i < XmlBuilder.PropertyRecommendations.Count; i++)
                         foundElements.Add(XmlBuilder.PropertyRecommendations[i]);
@@ -165,13 +171,20 @@ public class InspectionForm
                         foundElements.Add(XmlBuilder.GLRecommendations[i]);
                 break;
             case "Wind Addendum":
-                fileName = root + @"\Template\WindAddendum.docx";
+                _fileName = root + @"\Template\WindAddendum";
                 if (XmlBuilder.Wind != null)
                     foundElements.Add(XmlBuilder.Wind);
                 break;
             default:
                 break;
         }
+        if (System.IO.File.Exists(fileName.ToString() + prefix))
+        {
+            System.IO.File.Delete(fileName.ToString()+ prefix);
+        }
+        System.IO.File.Copy(_fileName.ToString() + prefix, fileName.ToString()+ prefix);
+
+
     }
     private int ProgressCounter(int currentProgress, int TableCount)
     {

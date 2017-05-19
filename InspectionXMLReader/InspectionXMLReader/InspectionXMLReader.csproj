@@ -76,12 +76,12 @@
     <Content Include="Template\PropertyRecLetter.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Template\RECCHECKINSPECTIONFORM.docx">
+    <None Include="Template\RECCHECKINSPECTIONFORM.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Template\WindAddendum.docx">
+    </None>
+    <None Include="Template\WindAddendum.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Template\WKFCInspectionformat.doc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

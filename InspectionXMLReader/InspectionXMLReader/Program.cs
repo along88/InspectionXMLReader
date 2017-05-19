@@ -24,30 +24,35 @@ class Program
 
     private static void RequestForm()
     {
-        
-        Console.WriteLine("1.Load from IMS");
-        Console.WriteLine("2.Load Local File");
+        int ctrlNo;
+        Console.WriteLine("Enter Control Number");
+        //Console.WriteLine("2.Load Local File");
         string response = Console.ReadLine();
-        switch (response)
+        switch (response.ToLower())
         {
-            case "1":
-                Console.WriteLine("Enter Control Number");
-                string ctrlNo = Console.ReadLine();
-                HostedFile hostedFile = new HostedFile(ctrlNo);
-                Load(hostedFile.Path);
-                System.IO.File.Delete(hostedFile.Path);
-                InspectionForm imsForm = new InspectionForm(SelectFormType());
-                break;
-            case "2":
+            case "cmd load":
                 LocalFile localFile = new LocalFile();
                 Load(localFile.Path);
                 InspectionForm localForm = new InspectionForm(SelectFormType());
                 break;
             default:
-                RequestForm();
+                if (int.TryParse(response,out ctrlNo))
+                {
+                    HostedFile hostedFile = new HostedFile(response);
+                    Load(hostedFile.Path);
+                    System.IO.File.Delete(hostedFile.Path);
+                    InspectionForm imsForm = new InspectionForm(SelectFormType());
+
+                }
+                else
+                {
+                    RequestForm();
+                }
                 break;
         }
         
+        
+
     }
 
     /// <summary>
@@ -144,8 +149,10 @@ class Program
         switch (newForm.ToLower())
         {
             case "y":
+                Console.Clear();
                 return true;
             case "n":
+                Console.Clear();
                 return false;
             default:
                 Continue();
