@@ -241,7 +241,7 @@ public class XmlBuilder
             {
                 line = sr.ReadLine();
                 if (string.IsNullOrWhiteSpace(line))
-                    break;
+                 break; 
                 else if (line.Contains("&"))
                 {
                     line = line.Replace("&", "&amp;");

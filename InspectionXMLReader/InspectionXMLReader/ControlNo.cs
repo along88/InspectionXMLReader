@@ -131,9 +131,7 @@ namespace InspectionXMLReader
                 SqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-
-                    //xdoc.Load(rdr.GetSqlXml(0).CreateReader());
-                    for (int i = 0; i < rdr.FieldCount; i++)
+for (int i = 0; i < rdr.FieldCount; i++)
                     {
                         if (i == 0)
                         {

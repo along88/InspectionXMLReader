@@ -51,10 +51,13 @@ public class InspectionForm
     /// <param name="wordApp"></param>
     private void FillInspectionForm()
     {
+        
         int percentage;
         try
         {
-            for (int i = 0; i < inspectionDoc.Tables.Count; i++)
+            
+
+                            for (int i = 0; i < inspectionDoc.Tables.Count; i++)
             {
                 foreach (Cell cell in inspectionDoc.Tables[i + 1].Range.Cells)
                 {
@@ -68,8 +71,11 @@ public class InspectionForm
                             {
                                 if (cell.Range.Text.Contains(String.Format("<{0}>", key.Key)))
                                 {
+                                    //cell.Range.Font.Color = WdColor.wdColorRed;
+                                    
                                     cell.Range.Text = key.Value;
                                     //Need to change text of tag color here
+                                    
                                     foundElements[k].Remove(key.Key);
                                     break;
                                 }
