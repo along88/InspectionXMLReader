@@ -13,11 +13,10 @@ using System.Reflection;
 
 public class InspectionForm
 {
-    
     private object missing = System.Reflection.Missing.Value;
     private object fileName = System.IO.Directory.GetCurrentDirectory() + @"\Temp\form"; //filename of the given word document
     private string prefix = ".doc";
-    
+
     private Application wordApp; //A instance of a word Application
     private Document inspectionDoc;// A instance of a document inside a word Application
     private List<Dictionary<string, string>> foundElements; //used to hold a list of XmlBuilder's element dictionaries
@@ -51,37 +50,15 @@ public class InspectionForm
     /// <param name="wordApp"></param>
     private void FillInspectionForm()
     {
-        
         int percentage;
         try
         {
-            
-
-                            for (int i = 0; i < inspectionDoc.Tables.Count; i++)
+          for (int i = 0; i < inspectionDoc.Tables.Count; i++)
             {
                 foreach (Cell cell in inspectionDoc.Tables[i + 1].Range.Cells)
                 {
-                    if (cell.Range.Text[0].Equals('<'))
-                    {
-                        for (int k = 0; k < foundElements.Count; k++)
-                        {
-                            if (foundElements[k] == null)
-                                continue;
-                            foreach (var key in foundElements[k])
-                            {
-                                if (cell.Range.Text.Contains(String.Format("<{0}>", key.Key)))
-                                {
-                                    //cell.Range.Font.Color = WdColor.wdColorRed;
-                                    
-                                    cell.Range.Text = key.Value;
-                                    //Need to change text of tag color here
-                                    
-                                    foundElements[k].Remove(key.Key);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    WriteToCell(cell);
+                    ColorCell(cell);
                 }
                 
                 percentage = ProgressCounter(i, inspectionDoc.Tables.Count + foundElements.Count);
@@ -98,6 +75,52 @@ public class InspectionForm
             inspectionDoc.Application.Quit(ref missing, ref missing, ref missing);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    private void WriteToCell(Cell cell)
+    {
+        if (cell.Range.Text[0].Equals('<'))
+        {
+            for (int k = 0; k < foundElements.Count; k++)
+            {
+                if (foundElements[k] == null)
+                    continue;
+                foreach (var key in foundElements[k])
+                {
+                    if (cell.Range.Text.Contains(String.Format("<{0}>", key.Key)))
+                    {
+                        //cell.Range.Font.Color = WdColor.wdColorRed;
+                        cell.Range.Text = key.Value;
+                        //Need to change text of tag color here
+                        foundElements[k].Remove(key.Key);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+    private void ColorCell(Cell cell)
+    {
+        if (cell.Range.Text[0].Equals('<'))
+            cell.Range.Font.Color = WdColor.wdColorRed;
+    }
+
+    
+    
+    
+    
+    
+    
     
     /// <summary>
     /// Loads the specified Inspection Form Template
@@ -194,11 +217,12 @@ public class InspectionForm
     }
     private int ProgressCounter(int currentProgress, int TableCount)
     {
-        
         Console.SetCursorPosition(0,2);
         currentProgress = (currentProgress * 100 / TableCount);
         Console.Write(currentProgress.ToString() + "%");
         return currentProgress;
     }
+
+    
 }
 
