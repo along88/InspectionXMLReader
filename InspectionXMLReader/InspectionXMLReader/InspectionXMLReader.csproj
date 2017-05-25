@@ -48,11 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlNo.cs" />
-    <Compile Include="FileManager.cs" />
-    <Compile Include="File.cs" />
+    <Compile Include="Domain\HostedFile.cs" />
     <Compile Include="InspectionForm.cs" />
-    <Compile Include="LocalFile.cs" />
+    <Compile Include="Domain\LocalFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\ErrorExceptions.cs" />
