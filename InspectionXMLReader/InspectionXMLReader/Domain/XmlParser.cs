@@ -21,7 +21,6 @@ public class XmlParser
         }
     } //Singleton Pattern
     private static XmlNodeList xmlNodes; //a reference to a given XML node
-    private string uploadedFile;
     #region XML Elements
     public static Dictionary<string, string> InspectionData { get; private set; }
     public static Dictionary<string, string> Survey { get; private set; }
@@ -57,16 +56,15 @@ public class XmlParser
     }
     public void GetInspectionData(string filePath)
     {
-        uploadedFile = filePath;
         XmlDocument xmlDocument = new XmlDocument();
-        xmlDocument.LoadXml(cleanXml());
-        populate(xmlDocument);
+        xmlDocument.LoadXml(cleanXmlFile(filePath));
+        populateElements(xmlDocument);
     }
-    private string cleanXml()
+    private string cleanXmlFile(string filePath)
     {
         string line = "";
         StringBuilder fullLine = new StringBuilder();
-        using (StreamReader sr = new StreamReader(uploadedFile))
+        using (StreamReader sr = new StreamReader(filePath))
         {
             while (true)
             {
@@ -84,7 +82,7 @@ public class XmlParser
         }
         return fullLine.ToString();
     }
-    private void populate(XmlDocument xmlDoc)
+    private void populateElements(XmlDocument xmlDoc)
     {
         xmlNodes = xmlDoc.ChildNodes[0].ChildNodes;
         foreach (XmlNode item in xmlNodes)
