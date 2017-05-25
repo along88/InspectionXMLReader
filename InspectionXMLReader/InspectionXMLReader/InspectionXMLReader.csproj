@@ -49,12 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Domain\HostedFile.cs" />
-    <Compile Include="InspectionForm.cs" />
+    <Compile Include="Domain\InspectionForm.cs" />
     <Compile Include="Domain\LocalFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\ErrorExceptions.cs" />
-    <Compile Include="XmlBuilder.cs" />
+    <Compile Include="XmlParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

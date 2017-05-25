@@ -46,74 +46,74 @@ public class InspectionForm
         {
             case "inspection format":
                 _fileName = root + @"\Template\WKFCInspectionformat";
-                if (XmlBuilder.InspectionData != null)
-                    foundElements.Add(XmlBuilder.InspectionData);
-                if (XmlBuilder.Survey != null)
-                    foundElements.Add(XmlBuilder.Survey);
-                if (XmlBuilder.RecsOpinionLosses != null)
-                    foundElements.Add(XmlBuilder.RecsOpinionLosses);
-                if (XmlBuilder.OperationsOccupancy != null)
-                    foundElements.Add(XmlBuilder.OperationsOccupancy);
-                if (XmlBuilder.BldgInfo != null)
-                    foundElements.Add(XmlBuilder.BldgInfo);
-                if (XmlBuilder.CommonHaz != null)
-                    foundElements.Add(XmlBuilder.CommonHaz);
-                if (XmlBuilder.SpecialHazards != null)
-                    foundElements.Add(XmlBuilder.SpecialHazards);
-                if (XmlBuilder.ProtectionSecurity != null)
-                    foundElements.Add(XmlBuilder.ProtectionSecurity);
-                if (XmlBuilder.NeighboringExposures != null)
-                    foundElements.Add(XmlBuilder.NeighboringExposures);
-                if (XmlBuilder.AddnandCATPerils != null)
-                    foundElements.Add(XmlBuilder.AddnandCATPerils);
-                if (XmlBuilder.Misc != null)
-                    foundElements.Add(XmlBuilder.Misc);
-                if (XmlBuilder.Cooking != null)
-                    for (int i = 0; i < XmlBuilder.Cooking.Count; i++)
-                        foundElements.Add(XmlBuilder.Cooking[i]);
-                if (XmlBuilder.Sprinkler != null)
-                    foundElements.Add(XmlBuilder.Sprinkler);
-                if (XmlBuilder.GeneralLiability != null)
-                    foundElements.Add(XmlBuilder.GeneralLiability);
+                if (XmlParser.InspectionData != null)
+                    foundElements.Add(XmlParser.InspectionData);
+                if (XmlParser.Survey != null)
+                    foundElements.Add(XmlParser.Survey);
+                if (XmlParser.RecsOpinionLosses != null)
+                    foundElements.Add(XmlParser.RecsOpinionLosses);
+                if (XmlParser.OperationsOccupancy != null)
+                    foundElements.Add(XmlParser.OperationsOccupancy);
+                if (XmlParser.BldgInfo != null)
+                    foundElements.Add(XmlParser.BldgInfo);
+                if (XmlParser.CommonHaz != null)
+                    foundElements.Add(XmlParser.CommonHaz);
+                if (XmlParser.SpecialHazards != null)
+                    foundElements.Add(XmlParser.SpecialHazards);
+                if (XmlParser.ProtectionSecurity != null)
+                    foundElements.Add(XmlParser.ProtectionSecurity);
+                if (XmlParser.NeighboringExposures != null)
+                    foundElements.Add(XmlParser.NeighboringExposures);
+                if (XmlParser.AddnandCATPerils != null)
+                    foundElements.Add(XmlParser.AddnandCATPerils);
+                if (XmlParser.Misc != null)
+                    foundElements.Add(XmlParser.Misc);
+                if (XmlParser.Cooking != null)
+                    for (int i = 0; i < XmlParser.Cooking.Count; i++)
+                        foundElements.Add(XmlParser.Cooking[i]);
+                if (XmlParser.Sprinkler != null)
+                    foundElements.Add(XmlParser.Sprinkler);
+                if (XmlParser.GeneralLiability != null)
+                    foundElements.Add(XmlParser.GeneralLiability);
                 break;
             case "im builders risk":
                 _fileName = root + @"\Template\imbuildersriskdataelements";
                 break;
             case "GL Rec Letter":
                 _fileName = root + @"\Template\GLRecLetter";
-                if (XmlBuilder.GLRecommendations != null)
-                    for (int i = 0; i < XmlBuilder.GLRecommendations.Count; i++)
-                        foundElements.Add(XmlBuilder.GLRecommendations[i]);
+                if (XmlParser.GLRecommendations != null)
+                    for (int i = 0; i < XmlParser.GLRecommendations.Count; i++)
+                        foundElements.Add(XmlParser.GLRecommendations[i]);
                 break;
             case "BI Addendum":
                 _fileName = root + @"\Template\BIADDENDUM";
-                if (XmlBuilder.BI != null)
-                    foundElements.Add(XmlBuilder.BI);
+                if (XmlParser.BI != null)
+                    foundElements.Add(XmlParser.BI);
                 break;
             case "Operations Addendum":
                 _fileName = root + @"\Template\OPERATIONSADDENDUM";
-                if (XmlBuilder.Operations != null)
-                    foundElements.Add(XmlBuilder.Operations);
+                if (XmlParser.Operations != null)
+                    foundElements.Add(XmlParser.Operations);
                 break;
             case "Property Rec Letter":
                 _fileName = root + @"\Template\PropertyRecLetter";
-                if (XmlBuilder.PropertyRecommendations != null)
-                    for (int i = 0; i < XmlBuilder.PropertyRecommendations.Count; i++)
-                        foundElements.Add(XmlBuilder.PropertyRecommendations[i]);
+                if (XmlParser.PropertyRecommendations != null)
+                    for (int i = 0; i < XmlParser.PropertyRecommendations.Count; i++)
+                        foundElements.Add(XmlParser.PropertyRecommendations[i]);
                 break;
             case "Rec Check Inspection Form":
                 _fileName = root + @"\Template\RECCHECKINSPECTIONFORM";
-                if (XmlBuilder.PropertyRecommendations != null)
-                    for (int i = 0; i < XmlBuilder.PropertyRecommendations.Count; i++)
-                        foundElements.Add(XmlBuilder.PropertyRecommendations[i]);
-                if (XmlBuilder.GLRecommendations != null)
-                    for (int i = 0; i < XmlBuilder.GLRecommendations.Count; i++)
-                        foundElements.Add(XmlBuilder.GLRecommendations[i]);
+                if (XmlParser.PropertyRecommendations != null)
+                    for (int i = 0; i < XmlParser.PropertyRecommendations.Count; i++)
+                        foundElements.Add(XmlParser.PropertyRecommendations[i]);
+                if (XmlParser.GLRecommendations != null)
+                    for (int i = 0; i < XmlParser.GLRecommendations.Count; i++)
+                        foundElements.Add(XmlParser.GLRecommendations[i]);
                 break;
             case "Wind Addendum":
                 _fileName = root + @"\Template\WindAddendum";
-                if (XmlBuilder.Wind != null)
-                    foundElements.Add(XmlBuilder.Wind);
+                if (XmlParser.Wind != null)
+                    foundElements.Add(XmlParser.Wind);
                 break;
             default:
                 break;

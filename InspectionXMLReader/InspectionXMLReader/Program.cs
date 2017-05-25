@@ -58,7 +58,7 @@ class Program
     {
         try
         {
-            XmlBuilder.Instance.GetInspectionData(path);
+            XmlParser.Instance.GetInspectionData(path);
         }
         catch (Exception ex)
         {

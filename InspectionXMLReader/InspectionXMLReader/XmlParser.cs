@@ -8,17 +8,15 @@ using System.Threading.Tasks;
 using System.Xml;
 
 
-public class XmlBuilder
+public class XmlParser
 {
-    private static XmlBuilder instance; 
-    public static XmlBuilder Instance
+    private static XmlParser instance; 
+    public static XmlParser Instance
     {
         get
         {
             if (instance == null)
-            {
-                instance = new XmlBuilder();
-            }
+                instance = new XmlParser();
             return instance;
         }
     } //Singleton Pattern
@@ -57,7 +55,6 @@ public class XmlBuilder
         }
         return dictionary;
     }
-
     public void GetInspectionData(string filePath)
     {
         uploadedFile = filePath;
