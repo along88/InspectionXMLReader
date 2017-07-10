@@ -40,7 +40,11 @@ namespace InspectionXMLReader
 
         protected void initialize()
         {
-            filePath = System.IO.Directory.GetCurrentDirectory() + @"\Temp\" + controlNumber + ".xml";
+            System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Temp\");
+            filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Temp\" + controlNumber + ".xml";
+
+          
+            // filePath = System.IO.Directory.GetCurrentDirectory();
             InspectionTables = new Dictionary<int, string>();
             InspectionTables.Add(1, "WKFC_InspectionData");
             InspectionTables.Add(2, "WKFC_InspectionData_SurveyInfo");
@@ -67,8 +71,20 @@ namespace InspectionXMLReader
         }
         private void writeToXmlFile(string line)
         {
-            using (StreamWriter sw = new StreamWriter(filePath, true))
-                sw.WriteLine(line);
+            try
+            {
+                using (StreamWriter sw = new StreamWriter(filePath, true))
+                {
+                    sw.WriteLine(line);
+                }
+            }
+            catch (Exception exception)
+            {
+
+                ErrorExceptions.OnException(exception.Message);
+            }
+            
+
         }
         private void queryIMSTable(string table)
         {
@@ -127,16 +143,17 @@ namespace InspectionXMLReader
                     {
                         writeToXmlFile(string.Format("<{0}>", table.ToString()));
                     }
+                    if (i == rdr.FieldCount - 1)
+                    {
+                        writeToXmlFile(string.Format("</{0}>", table.ToString()));
+                    }
                     if (rdr.GetName(i).ToString().Contains("Survey") || rdr.GetName(i).ToString().Contains("Ops") || rdr.GetName(i).ToString().Contains("Peril"))
                     {
                         writeToXmlFile(string.Format("<{0}>{1}</{0}>", rdr.GetName(i).ToString(), rdr.GetTextReader(i).ReadLine()));
                     }
                     else
                         writeToXmlFile(string.Format("<{0}>{1}</{0}>", rdr.GetName(i).ToString(), rdr.GetValue(i).ToString()));
-                    if (i == rdr.FieldCount - 1)
-                    {
-                        writeToXmlFile(string.Format("</{0}>", table.ToString()));
-                    }
+                    
                 }
             }
         }

@@ -38,8 +38,9 @@ class Program
             default:
                 if (int.TryParse(userResponse, out ctrlNo))
                 {
-                    HostedFile hostedFile = new HostedFile(userResponse);
+                    HostedFile hostedFile = new HostedFile(ctrlNo.ToString());
                     loadXml(hostedFile.FilePath);
+
                     System.IO.File.Delete(hostedFile.FilePath);
                     InspectionForm imsForm = new InspectionForm(requestFormType());
                 }

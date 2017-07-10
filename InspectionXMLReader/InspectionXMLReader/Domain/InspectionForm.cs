@@ -17,7 +17,7 @@ using System.Reflection;
 public class InspectionForm
 {
     private object missing = System.Reflection.Missing.Value;
-    private object fileName = System.IO.Directory.GetCurrentDirectory() + @"\Temp\form"; //filename of the given word document
+    private object fileName = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Temp\form"; //filename of the given word document
     private string prefix = ".doc";
 
     private Application wordApp; //A instance of a word Application
@@ -26,7 +26,6 @@ public class InspectionForm
 
     public InspectionForm(string formType)
     {
-       
         GetFileName(formType);
         InitializeInspectionForm();
         Console.Write("Building Document" + Environment.NewLine + "Please Wait.");
@@ -45,7 +44,7 @@ public class InspectionForm
         switch (form)
         {
             case "inspection format":
-                _fileName = root + @"\Template\WKFCInspectionformat";
+                _fileName = root + @"\WKFCInspectionformat";
                 if (XmlParser.InspectionData != null)
                     foundElements.Add(XmlParser.InspectionData);
                 if (XmlParser.Survey != null)
@@ -77,32 +76,32 @@ public class InspectionForm
                     foundElements.Add(XmlParser.GeneralLiability);
                 break;
             case "im builders risk":
-                _fileName = root + @"\Template\imbuildersriskdataelements";
+                _fileName = root + @"\imbuildersriskdataelements";
                 break;
             case "GL Rec Letter":
-                _fileName = root + @"\Template\GLRecLetter";
+                _fileName = root + @"\GLRecLetter";
                 if (XmlParser.GLRecommendations != null)
                     for (int i = 0; i < XmlParser.GLRecommendations.Count; i++)
                         foundElements.Add(XmlParser.GLRecommendations[i]);
                 break;
             case "BI Addendum":
-                _fileName = root + @"\Template\BIADDENDUM";
+                _fileName = root + @"\BIADDENDUM";
                 if (XmlParser.BI != null)
                     foundElements.Add(XmlParser.BI);
                 break;
             case "Operations Addendum":
-                _fileName = root + @"\Template\OPERATIONSADDENDUM";
+                _fileName = root + @"\OPERATIONSADDENDUM";
                 if (XmlParser.Operations != null)
                     foundElements.Add(XmlParser.Operations);
                 break;
             case "Property Rec Letter":
-                _fileName = root + @"\Template\PropertyRecLetter";
+                _fileName = root + @"\PropertyRecLetter";
                 if (XmlParser.PropertyRecommendations != null)
                     for (int i = 0; i < XmlParser.PropertyRecommendations.Count; i++)
                         foundElements.Add(XmlParser.PropertyRecommendations[i]);
                 break;
             case "Rec Check Inspection Form":
-                _fileName = root + @"\Template\RECCHECKINSPECTIONFORM";
+                _fileName = root + @"\RECCHECKINSPECTIONFORM";
                 if (XmlParser.PropertyRecommendations != null)
                     for (int i = 0; i < XmlParser.PropertyRecommendations.Count; i++)
                         foundElements.Add(XmlParser.PropertyRecommendations[i]);
@@ -111,7 +110,7 @@ public class InspectionForm
                         foundElements.Add(XmlParser.GLRecommendations[i]);
                 break;
             case "Wind Addendum":
-                _fileName = root + @"\Template\WindAddendum";
+                _fileName = root + @"\WindAddendum";
                 if (XmlParser.Wind != null)
                     foundElements.Add(XmlParser.Wind);
                 break;
